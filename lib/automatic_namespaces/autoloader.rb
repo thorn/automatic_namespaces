@@ -49,6 +49,8 @@ class AutomaticNamespaces::Autoloader
   end
 
   def find_or_create_module(namespace_object, module_name)
+    begin; require module_name; rescue LoadError; nil; end
+
     namespace_object.const_defined?(module_name) ?
       namespace_object.const_get(module_name) :
       namespace_object.const_set(module_name, Module.new)
